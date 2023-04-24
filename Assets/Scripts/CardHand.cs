@@ -13,7 +13,7 @@ public class CardHand : MonoBehaviour
     {
         points = 0;
         //Definimos dónde posicionamos las cartas de cada uno
-        if (!isDealer)
+        if (isDealer)
             coordY = 3;
         else
             coordY = -1;
@@ -22,7 +22,7 @@ public class CardHand : MonoBehaviour
     public void Clear()
     {
         points = 0;
-        if (!isDealer)
+        if (isDealer)
             coordY = 3;
         else
             coordY = -1;
