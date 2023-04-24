@@ -32,7 +32,8 @@ public class Deck : MonoBehaviour
     private void Start()
     {
         ShuffleCards();
-        StartGame();        
+        hitButton.interactable = false;
+        stickButton.interactable = false;        
     }
 
     private void InitCardValues()
@@ -82,6 +83,8 @@ public class Deck : MonoBehaviour
 
     void StartGame()
     {
+        playAgainButton.interactable = false;
+        DealerPointsText.text = "Points:";
         for (int i = 0; i < 2; i++)
         {
             PushPlayer();
@@ -89,7 +92,36 @@ public class Deck : MonoBehaviour
             /*TODO:
              * Si alguno de los dos obtiene Blackjack, termina el juego y mostramos mensaje
              */
+             if(player.GetComponent<CardHand>().points == 21)
+             {
+                finalMessage.text = "OLEEE AHIIIIII, HE GANAO";
+                dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>().ToggleFace(true);
+                //PointsText.text = "Ponits: " +player.GetComponent<CardHand>().points;  
+                DealerPointsText.text = "Points: " +dealer.GetComponent<CardHand>().points; 
+                hitButton.interactable = false;
+                stickButton.interactable = false;
+                playAgainButton.interactable = true;
+             }
+             if(dealer.GetComponent<CardHand>().points == 21)
+             {
+                finalMessage.text = "AYYYYYYY MI CUQUI, LO HE PERDIDO TOOOOOOOO!!!!!";
+                dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>().ToggleFace(true);
+                DealerPointsText.text = "Points: " +dealer.GetComponent<CardHand>().points;  
+                hitButton.interactable = false;
+                stickButton.interactable = false;
+                playAgainButton.interactable = true;
+             }
+             if(dealer.GetComponent<CardHand>().points == 21 && player.GetComponent<CardHand>().points == 21)
+             {
+                finalMessage.text = "NI HE GANAO NI HE PERDIO AHHHHHHHHHHHH";
+                dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>().ToggleFace(true);
+                DealerPointsText.text = "Points: " +dealer.GetComponent<CardHand>().points;  
+                hitButton.interactable = false;
+                stickButton.interactable = false;
+                playAgainButton.interactable = true;
+             }
         }
+        PointsText.text = "Points: " +player.GetComponent<CardHand>().points;
     }
 
     private void CalculateProbabilities()
