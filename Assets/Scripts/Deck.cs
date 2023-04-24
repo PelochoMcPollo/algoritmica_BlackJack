@@ -200,15 +200,69 @@ public class Deck : MonoBehaviour
 
     public void Stand()
     {
-        /*TODO: 
+         /*TODO: 
          * Si estamos en la mano inicial, debemos voltear la primera carta del dealer.
          */
+        dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>().ToggleFace(true);
 
+          
         /*TODO:
          * Repartimos cartas al dealer si tiene 16 puntos o menos
          * El dealer se planta al obtener 17 puntos o más
          * Mostramos el mensaje del que ha ganado
-         */                
+         */ 
+        hitButton.interactable = false;
+        stickButton.interactable = false;
+
+        if(dealer.GetComponent<CardHand>().points < 17)
+        {
+            PushDealer();
+        }
+
+
+        DealerPointsText.text = "Ponits: " +dealer.GetComponent<CardHand>().points;  
+        int PlayerPoints = player.GetComponent<CardHand>().points;
+        int DealerPoints = dealer.GetComponent<CardHand>().points;
+        
+
+        if(DealerPoints == 21)
+        {
+            finalMessage.text = "AYYYYYYY MI CUQUI, LO HE PERDIDO TOOOOOOOO!!!!!";
+            hitButton.interactable = false;
+            stickButton.interactable = false;
+            playAgainButton.interactable = true;
+        }
+        if(DealerPoints > PlayerPoints)
+        {
+            finalMessage.text = "AYYYYYYY MI CUQUI, LO HE PERDIDO TOOOOOOOO!!!!!";
+            hitButton.interactable = false;
+            stickButton.interactable = false;
+            playAgainButton.interactable = true;
+            
+        }
+         if(PlayerPoints > DealerPoints)
+        {
+            finalMessage.text = "OLEEE AHIIIIII, HE GANAO";
+            hitButton.interactable = false;
+            stickButton.interactable = false;
+            playAgainButton.interactable = true;
+             
+        }
+         if(DealerPoints == PlayerPoints)
+        {
+            finalMessage.text = "NI HE GANAO NI HE PERDIO AHHHHHHHHHHHH";
+            hitButton.interactable = false;
+            stickButton.interactable = false;
+            playAgainButton.interactable = true;
+        
+        }
+        if(DealerPoints > 21)
+        {
+            finalMessage.text = "OLEEE AHIIIIII, HE GANAO";
+            hitButton.interactable = false;
+            stickButton.interactable = false;
+            playAgainButton.interactable = true;
+        }              
          
     }
 
