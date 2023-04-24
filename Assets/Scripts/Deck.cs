@@ -267,7 +267,7 @@ public class Deck : MonoBehaviour
         hitButton.interactable = false;
         stickButton.interactable = false;
 
-        if(dealer.GetComponent<CardHand>().points < 17)
+        while(dealer.GetComponent<CardHand>().points < 17)
         {
             PushDealer();
         }
