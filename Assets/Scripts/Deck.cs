@@ -80,13 +80,13 @@ public class Deck : MonoBehaviour
           for(int i=0; i<faces.Length;i++)
         {
             int j = Random.Range(0,faces.Length-1);
-            Sprite tempFace = faces[i];
+            Sprite Cara = faces[i];
             faces[i] = faces[j];
-            faces[j] = tempFace;
+            faces[j] = Cara;
 
-            int tempValue = values[i];
+            int Valori = values[i];
             values[i] = values[j];
-            values[j] = tempValue;
+            values[j] = Valori;
         }
     }
 
@@ -151,11 +151,11 @@ public class Deck : MonoBehaviour
          * - Probabilidad de que el jugador obtenga más de 21 si pide una carta          
          */
 
-          totalcartas=0;
+         totalcartas=0;
          float puntoplayer = player.GetComponent<CardHand>().points;
-            cartasm21=0;
-            cartas1721=0;
-            dmp=0;
+         cartasm21=0;
+         cartas1721=0;
+         dmp=0;
 
     for(int i = cardIndex+1; i < faces.Length; i++)
     {
