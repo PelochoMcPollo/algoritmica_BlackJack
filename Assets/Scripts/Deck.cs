@@ -12,6 +12,9 @@ public class Deck : MonoBehaviour
     public Text finalMessage;
     public Text probMessage;
 
+    public Text PointsText;
+    public Text DealerPointsText;
+
     public float totalcartas;
     public float cartasm21;
     public float cartas1721;
@@ -171,10 +174,27 @@ public class Deck : MonoBehaviour
         
         //Repartimos carta al jugador
         PushPlayer();
-
         /*TODO:
          * Comprobamos si el jugador ya ha perdido y mostramos mensaje
-         */      
+         */ 
+        PointsText.text = "Ponits: " +player.GetComponent<CardHand>().points;     
+        if(player.GetComponent<CardHand>().points>21)
+        {
+            finalMessage.text = "AYYYYYYY MI CUQUI, LO HE PERDIDO TOOOOOOOO!!!!!";
+            hitButton.interactable = false;
+            stickButton.interactable = false;
+            playAgainButton.interactable = true;
+            DealerPointsText.text = "Ponits: " +dealer.GetComponent<CardHand>().points;  
+        }
+        if(player.GetComponent<CardHand>().points == 21)
+        {
+           finalMessage.text = "OLEEE AHIIIIII, HE GANAO";
+           hitButton.interactable = false;
+           stickButton.interactable = false;
+           playAgainButton.interactable = true;
+           DealerPointsText.text = "Ponits: " +dealer.GetComponent<CardHand>().points;  
+        
+        }    
 
     }
 
