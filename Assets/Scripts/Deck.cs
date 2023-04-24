@@ -12,13 +12,21 @@ public class Deck : MonoBehaviour
     public Text finalMessage;
     public Text probMessage;
 
+    //Puntos
     public Text PointsText;
     public Text DealerPointsText;
 
+    //Probabilidad
     public float totalcartas;
     public float cartasm21;
     public float cartas1721;
     public float dmp;
+
+    //Apuesta
+    public Dropdown Apuesta;
+    public Text CreditsText;
+    public float Credits = 1000;
+    public float dinerillo;
 
     public int[] values = new int[52];
     int cardIndex = 0;    
@@ -33,7 +41,8 @@ public class Deck : MonoBehaviour
     {
         ShuffleCards();
         hitButton.interactable = false;
-        stickButton.interactable = false;        
+        stickButton.interactable = false;      
+        CreditsText.text = "Credits: " + Credits;  
     }
 
     private void InitCardValues()
@@ -83,7 +92,10 @@ public class Deck : MonoBehaviour
 
     void StartGame()
     {
+        Bet();
+        CreditsText.text = "Credits: " + Credits;
         playAgainButton.interactable = false;
+        Apuesta.interactable = false;
         DealerPointsText.text = "Points:";
         for (int i = 0; i < 2; i++)
         {
@@ -96,11 +108,13 @@ public class Deck : MonoBehaviour
              {
                 finalMessage.text = "OLEEE AHIIIIII, HE GANAO";
                 dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>().ToggleFace(true);
-                //PointsText.text = "Ponits: " +player.GetComponent<CardHand>().points;  
                 DealerPointsText.text = "Points: " +dealer.GetComponent<CardHand>().points; 
+                Credits = Credits + (dinerillo*2);
+                CreditsText.text = "Credits: " + Credits;
                 hitButton.interactable = false;
                 stickButton.interactable = false;
                 playAgainButton.interactable = true;
+                Apuesta.interactable = true;
              }
              if(dealer.GetComponent<CardHand>().points == 21)
              {
@@ -110,15 +124,19 @@ public class Deck : MonoBehaviour
                 hitButton.interactable = false;
                 stickButton.interactable = false;
                 playAgainButton.interactable = true;
+                Apuesta.interactable = true;
              }
              if(dealer.GetComponent<CardHand>().points == 21 && player.GetComponent<CardHand>().points == 21)
              {
                 finalMessage.text = "NI HE GANAO NI HE PERDIO AHHHHHHHHHHHH";
                 dealer.GetComponent<CardHand>().cards[0].GetComponent<CardModel>().ToggleFace(true);
                 DealerPointsText.text = "Points: " +dealer.GetComponent<CardHand>().points;  
+                Credits = Credits + dinerillo;
+                CreditsText.text = "Credits: " + Credits;
                 hitButton.interactable = false;
                 stickButton.interactable = false;
                 playAgainButton.interactable = true;
+                Apuesta.interactable = true;
              }
         }
         PointsText.text = "Points: " +player.GetComponent<CardHand>().points;
@@ -216,6 +234,7 @@ public class Deck : MonoBehaviour
             hitButton.interactable = false;
             stickButton.interactable = false;
             playAgainButton.interactable = true;
+            Apuesta.interactable = true;
             DealerPointsText.text = "Ponits: " +dealer.GetComponent<CardHand>().points;  
         }
         if(player.GetComponent<CardHand>().points == 21)
@@ -224,8 +243,10 @@ public class Deck : MonoBehaviour
            hitButton.interactable = false;
            stickButton.interactable = false;
            playAgainButton.interactable = true;
+           Apuesta.interactable = true;
            DealerPointsText.text = "Ponits: " +dealer.GetComponent<CardHand>().points;  
-        
+           Credits = Credits + (dinerillo*2);
+           CreditsText.text = "Credits: " + Credits;
         }    
 
     }
@@ -263,6 +284,7 @@ public class Deck : MonoBehaviour
             hitButton.interactable = false;
             stickButton.interactable = false;
             playAgainButton.interactable = true;
+            Apuesta.interactable = true;
         }
         if(DealerPoints > PlayerPoints)
         {
@@ -270,6 +292,7 @@ public class Deck : MonoBehaviour
             hitButton.interactable = false;
             stickButton.interactable = false;
             playAgainButton.interactable = true;
+            Apuesta.interactable = true;
             
         }
          if(PlayerPoints > DealerPoints)
@@ -277,7 +300,11 @@ public class Deck : MonoBehaviour
             finalMessage.text = "OLEEE AHIIIIII, HE GANAO";
             hitButton.interactable = false;
             stickButton.interactable = false;
+            Apuesta.interactable = true;
             playAgainButton.interactable = true;
+            Credits = Credits + (dinerillo*2);
+            CreditsText.text = "Credits: " + Credits;
+            
              
         }
          if(DealerPoints == PlayerPoints)
@@ -285,7 +312,10 @@ public class Deck : MonoBehaviour
             finalMessage.text = "NI HE GANAO NI HE PERDIO AHHHHHHHHHHHH";
             hitButton.interactable = false;
             stickButton.interactable = false;
+            Apuesta.interactable = true;
             playAgainButton.interactable = true;
+            Credits = Credits + dinerillo;
+            CreditsText.text = "Credits: " + Credits;
         
         }
         if(DealerPoints > 21)
@@ -294,6 +324,9 @@ public class Deck : MonoBehaviour
             hitButton.interactable = false;
             stickButton.interactable = false;
             playAgainButton.interactable = true;
+            Apuesta.interactable = true;
+            Credits = Credits + (dinerillo*2);
+            CreditsText.text = "Credits: " + Credits;
         }              
          
     }
@@ -308,6 +341,84 @@ public class Deck : MonoBehaviour
         cardIndex = 0;
         ShuffleCards();
         StartGame();
+    }
+
+    public void Bet()
+    {
+       switch(Apuesta.value) 
+       {
+        case 0:
+            Credits=Credits-10;
+            CreditsText.text = "Credits: " + Credits;
+            dinerillo = 10;
+            break;
+       
+        case 1:
+            Credits=Credits-20;
+            CreditsText.text = "Credits: " + Credits;
+            dinerillo = 20;
+            break;
+       
+        case 2:
+            Credits=Credits-50;
+            CreditsText.text = "Credits: " + Credits;
+            dinerillo = 50;
+            break;
+       
+        case 3:
+            Credits=Credits-100;
+            dinerillo = 100;
+            CreditsText.text = "Credits: " + Credits;
+            break;
+       }
+
+    }
+
+    public void ONOFF()
+    {
+        switch(Apuesta.value)
+        {
+            case 0:
+                if(Credits < 10)
+                {
+                    playAgainButton.interactable = false;
+                }
+                else
+                {
+                    playAgainButton.interactable = true;
+                }
+            break;
+             case 1:
+                if(Credits < 20)
+                {
+                    playAgainButton.interactable = false;
+                }
+                 else
+                {
+                    playAgainButton.interactable = true;
+                }
+            break;
+             case 2:
+                if(Credits < 50)
+                {
+                    playAgainButton.interactable = false;
+                }
+                 else
+                {
+                    playAgainButton.interactable = true;
+                }
+            break;
+             case 3:
+                if(Credits < 100)
+                {
+                    playAgainButton.interactable = false;
+                }
+                 else
+                {
+                    playAgainButton.interactable = true;
+                }
+            break;
+        }
     }
     
 }
