@@ -12,6 +12,11 @@ public class Deck : MonoBehaviour
     public Text finalMessage;
     public Text probMessage;
 
+    public float totalcartas;
+    public float cartasm21;
+    public float cartas1721;
+    public float dmp;
+
     public int[] values = new int[52];
     int cardIndex = 0;    
        
@@ -92,7 +97,52 @@ public class Deck : MonoBehaviour
          * - Probabilidad de que el jugador obtenga entre un 17 y un 21 si pide una carta
          * - Probabilidad de que el jugador obtenga más de 21 si pide una carta          
          */
+
+          totalcartas=0;
+         float puntoplayer = player.GetComponent<CardHand>().points;
+            cartasm21=0;
+            cartas1721=0;
+            dmp=0;
+
+    for(int i = cardIndex+1; i < faces.Length; i++)
+    {
+        totalcartas++;
+
+         if(values[3] + values[i] > puntoplayer)
+        {
+            dmp++;
+        }
+
+
+        if( values[i] == 11 && values[i] + puntoplayer > 21)
+        {
+            if(values[i] == 11)
+            {
+                values[i] = 1;
+            }
+        }
+
+
+
+        if( values[i] + puntoplayer >= 17 && values[i] + puntoplayer <= 21 )
+        {
+            cartas1721++;  
+        }
+
+
+        if( values[i] + puntoplayer > 21)
+        {
+            cartasm21++;  
+        }
     }
+    
+        probMessage.text =
+        "Deal > Play: " + dmp/totalcartas + "\n" +
+        "17 <= X <= 21: " + cartas1721/totalcartas + "\n" +
+        "21 > X: " + cartasm21/totalcartas;
+
+    }
+    
 
     void PushDealer()
     {
